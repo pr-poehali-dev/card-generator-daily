@@ -1,0 +1,36 @@
+{
+  "tests": [
+    {
+      "name": "Get today card",
+      "method": "GET",
+      "path": "/?action=today",
+      "expectedStatus": 200,
+      "bodyMatcher": "partial"
+    },
+    {
+      "name": "Get all cards",
+      "method": "GET",
+      "path": "/?action=all",
+      "expectedStatus": 200,
+      "bodyMatcher": "partial"
+    },
+    {
+      "name": "Create new card",
+      "method": "POST",
+      "path": "/",
+      "body": {
+        "date": "01-01",
+        "title": "С Новым Годом!",
+        "message": "Счастья, здоровья, успехов в новом году!",
+        "image_url": "https://example.com/card.jpg",
+        "is_holiday": true,
+        "holiday_name": "Новый Год"
+      },
+      "expectedStatus": 200,
+      "expectedBody": {
+        "success": true
+      },
+      "bodyMatcher": "partial"
+    }
+  ]
+}
