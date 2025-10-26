@@ -1,4 +1,5 @@
 {
+  "send-test-cards": "https://functions.poehali.dev/984850e6-4ae1-4f9d-bf71-cba8c51bdafe",
   "setup-webhook": "https://functions.poehali.dev/846c3efd-4477-47c4-86fc-84ceafafc998",
   "seed-cards": "https://functions.poehali.dev/f3a1d4a0-c93a-4c87-acc9-6960243bfead",
   "cards-api": "https://functions.poehali.dev/1bd9e508-4b11-466f-822c-712a48a72d8a",

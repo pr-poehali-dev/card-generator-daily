@@ -20,6 +20,7 @@ const Index = () => {
   const [todayCard, setTodayCard] = useState<DailyCard | null>(null);
   const [chatId, setChatId] = useState('');
   const [isSubscribing, setIsSubscribing] = useState(false);
+  const [isSendingTest, setIsSendingTest] = useState(false);
 
   useEffect(() => {
     loadTodayCard();
@@ -70,6 +71,33 @@ const Index = () => {
       toast.error('Ошибка подписки. Попробуйте позже');
     } finally {
       setIsSubscribing(false);
+    }
+  };
+
+  const handleSendTestCards = async () => {
+    setIsSendingTest(true);
+    try {
+      const response = await fetch('https://functions.poehali.dev/984850e6-4ae1-4f9d-bf71-cba8c51bdafe', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          days: 3,
+        }),
+      });
+
+      if (response.ok) {
+        const result = await response.json();
+        toast.success(`Отправлено ${result.sent_count} открыток за 3 дня!`);
+      } else {
+        toast.error('Ошибка отправки открыток');
+      }
+    } catch (error) {
+      console.error('Send test error:', error);
+      toast.error('Ошибка отправки');
+    } finally {
+      setIsSendingTest(false);
     }
   };
 
@@ -184,6 +212,37 @@ const Index = () => {
                   )}
                 </Button>
               </div>
+            </div>
+          </Card>
+        </div>
+
+        <div className="max-w-2xl mx-auto mt-8">
+          <Card className="p-6 bg-white/90 backdrop-blur-sm shadow-lg border-2 border-white/50">
+            <div className="text-center">
+              <h3 className="text-xl font-bold text-foreground mb-3">
+                Тестовая отправка
+              </h3>
+              <p className="text-muted-foreground mb-4">
+                Отправить открытки за последние 3 дня всем подписчикам
+              </p>
+              <Button
+                onClick={handleSendTestCards}
+                disabled={isSendingTest}
+                className="bg-secondary hover:bg-secondary/90"
+                size="lg"
+              >
+                {isSendingTest ? (
+                  <>
+                    <Icon name="Loader2" className="mr-2 animate-spin" size={20} />
+                    Отправка...
+                  </>
+                ) : (
+                  <>
+                    <Icon name="Send" className="mr-2" size={20} />
+                    Отправить тестовые открытки
+                  </>
+                )}
+              </Button>
             </div>
           </Card>
         </div>
